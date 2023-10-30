@@ -1,0 +1,82 @@
+Añadir PostgreSQL a DotNet Core¶
+Creación del proyecto¶
+mkdir MySite
+cd MySite
+
+dotnet new mvc
+Packages¶
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+Editar MySite.csproj
+
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <!-- #... -->
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+
+    <!-- Añadir -->
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.1" />
+  </ItemGroup>
+</Project>
+dotnet restore
+AppDbContext¶
+Crear AppDbContext.cs dentro del directorio Models
+
+using Microsoft.EntityFrameworkCore;
+
+namespace MySite.Models
+{
+    public class AppDbContext : DbContext
+    {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
+    }
+}
+Startup.cs¶
+Editar el método ConfigureServices
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvc();
+    services.AddEntityFrameworkNpgsql().AddDbContext<AppDbContext>(opt =>
+        opt.UseNpgsql(Configuration.GetConnectionString("AppDbContext"))
+    );
+}
+appsettings¶
+Editar appsettings.Development.json, añadiendo ConnectionString
+
+{
+  "ConnectionStrings": {
+    "AppDbContext": "User Id=snicoper;Password=123456;Server=localhost;Port=5432;Database=practicas;Integrated Security=true;Pooling=true;"
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+    "Default": "Debug",
+    "System": "Information",
+    "Microsoft": "Information"
+    }
+  }
+}
+Probar¶
+Dentro de Models crear Persona.cs con el siguiente código.
+
+namespace MySite.Models
+{
+    public class Persona
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+}
+Editar Models/AppDbContext.cs y añadir la propiedad:
+
+public DbSet<Persona> Personas { get; set; }
+Añadir migración y actualizad la base de datos¶
+dotnet ef migrations add Initial
+dotnet ef database update
+
+
+//Correr:
+
+dotnet watch --project Clearmind.sln
