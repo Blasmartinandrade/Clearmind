@@ -11,6 +11,11 @@ namespace Clearmind.Database
         public DbSet<Proyecto> Proyectos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<UsuarioProyecto> UsuariosProyectos { get; set; }
+        public DbSet<UsuarioTarea> UsuariosTareas { get; set; }
+        public DbSet<Tarea> Tareas { get; set; }
+        public DbSet<Objetivo> Objetivos { get; set; }
+
+
 
         // Configuraciones del mapeo de tablas basadas en entidades haciendo uso de 'modelBuilder'
         // Clase que contendra varios metodos que nos ayudaran a definir caracteristicas escenciales para el mapeo
@@ -33,6 +38,19 @@ namespace Clearmind.Database
             modelBuilder.Entity<UsuarioProyecto>().ToTable("UsuariosProyectos");
 
 
+            modelBuilder.HasDefaultSchema("public");
+            modelBuilder.Entity<UsuarioTarea>().ToTable("UsuariosTareas");
+
+            modelBuilder.HasDefaultSchema("public");
+            modelBuilder.Entity<Tarea>().ToTable("Tareas");
+
+            modelBuilder.HasDefaultSchema("public");
+            modelBuilder.Entity<Objetivo>().ToTable("Objetivos");
+
+
+
+
+
 /*-----------------------------------------------------------------------------*/
 
             // Esto indica que la tabla UsuariosProyectos tendra una clave compuesta por 
@@ -42,6 +60,8 @@ namespace Clearmind.Database
             .HasKey(up => new { up.UsuarioID, up.ProyectoID });
 
             
+            modelBuilder.Entity<UsuarioTarea>()
+            .HasKey(ut => new { ut.UsuarioID, ut.TareaID});
 
         }
     }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Clearmind.Models.Entidades;
 using Clearmind.Database;
 
-namespace Clearmind.Services
+namespace Clearmind.Models.Services
 {
     public class UsuarioServices
     {

@@ -16,6 +16,17 @@ namespace Clearmind.Models.Entidades{
         [Column(TypeName = "nchar(50)")]
         [AllowNull]
         public string Nombre {get; set;}
+
+
+        [Required]
+        [Column(TypeName = "nchar(250)")]
+        [AllowNull]
+        public string Descripcion {get; set;}
+
+        [Required]
+        [Column(TypeName = "nchar(100)")]
+        [AllowNull]
+        public string Email {get; set;}
         
 	    [Required]
         [Column(TypeName = "nchar(270)")]
@@ -33,6 +44,10 @@ namespace Clearmind.Models.Entidades{
         [AllowNull]
         [NotMapped]
         public List<Proyecto> Proyectos {get; set;}
+
+        [AllowNull]
+        [NotMapped]
+        public List<Proyecto> Tareas {get; set;}
 
 
 
@@ -64,6 +79,14 @@ namespace Clearmind.Models.Entidades{
             
         }
 
+        public void setEmail(string Email){
+            this.Email = Email;
+        }
+
+        public void setDescripcion(string Desc){
+            this.Descripcion = Desc;
+        }
+
 /*-----------------------------------------------------------------------------*/
         //GETTERS
 
@@ -89,5 +112,12 @@ namespace Clearmind.Models.Entidades{
 
         }
 
+        public string getEmail(){
+            return this.Email;
+        }
+
+        public string getDescripcion(){
+            return this.Descripcion;
+        }
     }
 }

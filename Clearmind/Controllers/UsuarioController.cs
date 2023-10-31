@@ -1,8 +1,9 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Clearmind.Models;
-using Clearmind.Database;
 using Clearmind.Models.Entidades;
+using Clearmind.Models.Services;
+using Clearmind.Database;
+
 
 
 namespace Clearmind.Controllers;
@@ -13,10 +14,12 @@ namespace Clearmind.Controllers;
 [Route("api/usuarios")]
 public class UsuarioController : Controller{
     private readonly DataContext _context;
+    private readonly UsuarioServices _service;
 
-    public UsuarioController(DataContext context)
+    public UsuarioController(DataContext context, UsuarioServices service)
     {
         _context = context;
+        _service = service;
     }
 
 
@@ -30,7 +33,8 @@ public class UsuarioController : Controller{
         {
             return new ObjectResult(new { mensaje = "Producto creado con éxito"})
             {
-                StatusCode = 201 
+                StatusCode = 201
+
             };
         }
         else

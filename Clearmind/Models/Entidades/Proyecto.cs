@@ -15,25 +15,30 @@ namespace Clearmind.Models.Entidades{
   
         public int Id {get; set;}
 	
-	[Required]
+	    [Required]
         [Column(TypeName = "nchar(50)")]
         [AllowNull]
         public string Nombre {get; set;}
         
-	[Required]
+	    [Required]
         [Column(TypeName = "nchar(200)")]
-	[AllowNull]
+	    [AllowNull]
         public string Descripcion {get; set;}
 
-	[Required]
+	    [Required]
         [Column(TypeName = "nchar(120)")]
         [AllowNull]
         public string Imagen {get; set;}
 
-	[Required]
+	    [Required]
         [Column(TypeName = "nchar(100)")]
         [AllowNull]
         public string Token {get; set;}
+
+
+        [NotMapped]
+        [AllowNull]
+        public List<Objetivo> Objetivos {get; set;}
 
 
 
