@@ -47,7 +47,7 @@ namespace Clearmind.Models.Entidades{
 
         [AllowNull]
         [NotMapped]
-        public List<Proyecto> Tareas {get; set;}
+        public List<Tarea> Tareas {get; set;}
 
 
 
